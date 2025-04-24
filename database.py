@@ -1,8 +1,6 @@
 import sqlite3 as sql
 from tabulate import tabulate
 
-db_path = "D:\Code\Projet_en_cours\Task Manager\data\data.db"
-
 class Data:
     def __init__(self,path): #Init de la connexion avec la base de donnée
         self.path = path
@@ -19,10 +17,3 @@ class Data:
         for element in headers_raw: #Récupère uniquement le nom des colonnes des propriété des colonne de la table
             header.append(element[1])
         print(tabulate(tab,header,tablefmt="outline"))
-
-    
-
-
-
-data = Data(db_path)
-data.dev_show_table("Task")
