@@ -8,8 +8,9 @@ class Data:
 
     def query(self,query): #Retourne le resultat d'une requete SQL
         cur = self.data.cursor()
+        r = cur.execute(query)
         self.data.commit()
-        return list(cur.execute(query))
+        return list(r)
     
     def dev_show_table(self,table): #Renvoie le contenue d'une table SQL dans la console de manière lisible
         tab = self.query(f"SELECT * FROM {table}") #Récupère tout le contenue de la table
