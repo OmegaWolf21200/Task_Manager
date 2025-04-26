@@ -1,12 +1,11 @@
 from datetime import datetime
 from tabulate import tabulate
-from database import *
 
-headers = ["id","name","detail","created","deadline","priority","statut"]
+headers = ["id","name","detail","created","deadline","priority","statut"] #Liste des headers pour l'affichage des tableau
 
 class Task:
 
-    def __init__(self,id,name,detail,created=datetime.now().strftime("%d/%m/%Y"),deadline=None,priority="normal",statut="running"):
+    def __init__(self,id,name,detail,created,deadline,priority,statut):
         self.id = id
         self.name = name
         self.detail = detail
@@ -16,16 +15,16 @@ class Task:
         self.statut = statut
 
 
-    def get_task(self):
+    def get_task(self): # Retourne toutes les propriétés de la tâche
         return [self.id,self.name,self.detail,self.created,self.deadline,self.priority,self.statut]
     
-    def get_id(self):
+    def get_id(self): # Retourne l'id de la tâche
         return self.id
     
-    def get_name(self):
+    def get_name(self): # Retourne le nom de la tâche
         return self.name
     
-    def show_task(self):
+    def dev_show_task(self): # Affiche un tableau des propriété de la tâches
         print(tabulate([self.get_task()],headers,tablefmt="outline"))
 
 
@@ -34,16 +33,19 @@ class Task_list:
     def __init__(self):
         self.tasks = list()
 
-    def add_task(self,task: Task):
-        self.tasks.append(task)
+    def get_raw_task_list(self):
+        return self.tasks
 
-    def show_task_list(self):
+    def dev_show_task_list(self): #Affiche un tableau de l'ensemble des tâches dans la liste
         tab = list()
         for task in self.tasks:
             tab.append(task.get_task())
         print(tabulate(tab,headers,tablefmt="outline"))
 
-    def remove_task(self,id):
+    def add_task_to_list(self,task: Task):
+        self.tasks.append(task)
+
+    def remove_task_to_list(self,id):
         for task in self.tasks:
             if task.get_id() == id:
                 self.tasks.remove(task)
