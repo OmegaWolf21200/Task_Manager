@@ -64,13 +64,17 @@ class Task:
         self.statut = n_statut
 
     def set_task(self,n_id=None,n_name=None,n_detail=None,n_created=None,n_deadline=None,n_priority=None,n_statut=None):
-        self.set_id(n_id) if n_id != None else None
-        self.set_name(n_name) if n_name != None else None
-        self.set_detail(n_detail) if n_detail != None else None
-        self.set_created(n_created) if n_created != None else None
-        self.set_deadline(n_deadline) if n_deadline != None else None
-        self.set_priority(n_priority) if n_priority != None else None
-        self.set_statut(n_statut) if n_statut != None else None
+        def do_modification(func,var):
+            func(var) if var != None else None
+
+        do_modification(self.set_id,n_id)
+        do_modification(self.set_name,n_name)
+        do_modification(self.set_detail,n_detail)
+        do_modification(self.set_created,n_created)
+        do_modification(self.set_deadline,n_deadline)
+        do_modification(self.set_priority,n_priority)
+        do_modification(self.set_statut,n_statut)
+        
         
 
     #Méthode
@@ -111,5 +115,4 @@ class Task_list:
         for task in self.tasks:
             if task.get_id() == id_task:
                 task.set_task(n_id,n_name,n_detail,n_created,n_deadline,n_priority,n_statut)
-                
             
