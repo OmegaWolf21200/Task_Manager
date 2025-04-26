@@ -1,2 +1,4 @@
 /design
 /data
+/__pycache__
+*.pyc
