@@ -21,8 +21,15 @@ def dev_show_sync_data_list(): # Affiche les élément de la liste des tâches, 
 
 
 def add_task(id,name,detail="",created=datetime.now().strftime("%d/%m/%Y"),deadline="",priority="normal",statut="running"): # !! Verifier l'id !!
-    task_list.add_task_to_list(Task(id,name,detail,created,deadline,priority,statut))
-    data.query(f"INSERT INTO Task VALUES ({id},\"{name}\",\"{detail}\",\"{created}=\",\"{deadline}\",\"{priority}\",\"{statut}\")")
+    correct = False
+    while not correct:
+        try:
+            data.query(f"INSERT INTO Task VALUES ({id},\"{name}\",\"{detail}\",\"{created}=\",\"{deadline}\",\"{priority}\",\"{statut}\")")
+            task_list.add_task_to_list(Task(id,name,detail,created,deadline,priority,statut))
+            correct = True
+        except sql.IntegrityError:
+            id += 1
+
     
 def remove_task(id_task):
     task_list.remove_task_to_list(id_task)
@@ -33,4 +40,3 @@ def edit_task(id_task,n_id=None,n_name=None,n_detail=None,n_created=None,n_deadl
     temp_task = task_list.get_task_to_list(id_task if n_id == None else n_id) #Prendre l'id d'origine si l'id n'a pas été modifié, sinon prendre le nouvel id
     #Mettre a jour la table
     data.query(f"UPDATE Task SET {headers[0]} = {temp_task.get_id()},{headers[1]} = \"{temp_task.get_name()}\",{headers[2]} = \"{temp_task.get_detail()}\",{headers[3]} = \"{temp_task.get_created()}\",{headers[4]} = \"{temp_task.get_deadline()}\",{headers[5]} = \"{temp_task.get_priority()}\",{headers[6]} = \"{temp_task.get_statut()}\" WHERE ID = {id_task}")
-
